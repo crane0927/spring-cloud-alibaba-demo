@@ -6,11 +6,16 @@ import com.liuh.common.entity.Product;
 import com.liuh.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * @PackageName: com.liuh.order.controller
@@ -30,6 +35,9 @@ public class OrderController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
     /**
      * 新增订单
      *
@@ -39,8 +47,16 @@ public class OrderController {
     @GetMapping("/add/{pid}")
     public Order add(@PathVariable("pid") Integer pid) {
         log.info(">>客户下单，调用商品微服务查询商品信息");
-        //通过 restTemplate 调用商品微服务
-        Product product = restTemplate.getForObject("http://localhost:8081/product/product/findByPid/" + pid, Product.class);
+
+        // 从 Nacos 中获取服务地址列表
+        List<ServiceInstance> instances = discoveryClient.getInstances("service-product");
+        // 自定义规则实现随机挑选服务
+        int index = new Random().nextInt(instances.size());
+        ServiceInstance serviceInstance = instances.get(index);
+        String url = serviceInstance.getHost() + ":" + serviceInstance.getPort();
+        log.info(url);
+        // 通过 restTemplate 调用商品微服务
+        Product product = restTemplate.getForObject("http://" + url + "/product/product/findByPid/" + pid, Product.class);
         log.info(">>商品信息，查询结果：" + JSON.toJSONString(product));
 
         Order order = new Order();
