@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.liuh.common.entity.Order;
 import com.liuh.common.entity.Product;
 import com.liuh.order.service.OrderService;
+import com.liuh.order.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -33,10 +34,13 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private ProductService productService;
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
+//    @Autowired
+//    private RestTemplate restTemplate;
+//
+//    @Autowired
+//    private DiscoveryClient discoveryClient;
 
     /**
      * 新增订单
@@ -49,14 +53,19 @@ public class OrderController {
         log.info(">>客户下单，调用商品微服务查询商品信息");
 
         // 从 Nacos 中获取服务地址列表
-        List<ServiceInstance> instances = discoveryClient.getInstances("service-product");
+//        List<ServiceInstance> instances = discoveryClient.getInstances("service-product");
         // 自定义规则实现随机挑选服务
-        int index = new Random().nextInt(instances.size());
-        ServiceInstance serviceInstance = instances.get(index);
-        String url = serviceInstance.getHost() + ":" + serviceInstance.getPort();
-        log.info(url);
+//        int index = new Random().nextInt(instances.size());
+//        ServiceInstance serviceInstance = instances.get(index);
+//        String url = serviceInstance.getHost() + ":" + serviceInstance.getPort();
+
+        // 直接使用微服务名字， 从 Nacos 中获取服务地址
+//        String url = "service-product";
+//        log.info(url);
         // 通过 restTemplate 调用商品微服务
-        Product product = restTemplate.getForObject("http://" + url + "/product/product/findByPid/" + pid, Product.class);
+//        Product product = restTemplate.getForObject("http://" + url + "/product/product/findByPid/" + pid, Product.class);
+        // 通过 Fegin 调用商品微服务
+        Product product = productService.findByPid(pid);
         log.info(">>商品信息，查询结果：" + JSON.toJSONString(product));
 
         Order order = new Order();

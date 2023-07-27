@@ -7,16 +7,22 @@ server:
 
 spring:
   application:
-    name: service-order # 微服务名称
+    # 微服务名称
+    name: service-order
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8849 # nacos 地址
+        # Nacos 地址
+        server-addr: 123.249.106.95:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/order?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://123.249.106.95:3306/order?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
     username: root
-    password: 123456
+    password: Z6eQaNaitK5vSX
+# Ribbon 配置
+ribbon:
+  # 负载均衡策略改为随机
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
 
 mybatis-plus:
   configuration:
