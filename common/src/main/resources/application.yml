@@ -1,1 +1,10 @@
-
+feign:
+  okhttp:
+    # 开启 feign 对 okhttp 的支持
+    enabled: true
+#  client:
+#    config:
+#      # 这里用 default 就是全局配置，如果是写服务名称，则是针对某个微服务的配置
+#      default:
+#        # 日志级别
+#        loggerLevel: FULL

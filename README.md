@@ -96,3 +96,7 @@ CREATE TABLE `shop_order`
     2. Spring Cloud : Greenwich.RELEASE -> Greenwich.SR6
     3. Spring Cloud Alibaba : 2.1.0.RELEASE -> 2.1.4.RELEASE
 2. 订单微服务引入 Fegin 实现远程调用
+
+## 2023 年 08 月 04 日
+1. 将 Feign 相关方法提取到公共模块 common
+2. 使用 Nacos 作为配置中心

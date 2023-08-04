@@ -6,26 +6,23 @@ server:
       timeout: 600
 
 spring:
-  application:
-    # 微服务名称
-    name: service-order
-  cloud:
-    nacos:
-      discovery:
-        # Nacos 地址
-        server-addr: 123.249.106.95:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://123.249.106.95:3306/order?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
     username: root
     password: Z6eQaNaitK5vSX
-# Ribbon 配置
-ribbon:
-  # 负载均衡策略改为随机
-  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
 
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: false
 
+# 访问的服务名
+service-product:
+  ribbon:
+    # 负载均衡策略
+    NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule
+
+
+parameter:
+  name: 本地配置文件

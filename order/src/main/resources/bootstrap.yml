@@ -1,0 +1,21 @@
+spring:
+  application:
+    # 微服务名称
+    name: service-order
+  profiles:
+    # 设置为开发环境
+    active: dev
+  cloud:
+    nacos:
+      # Nacos 地址
+      server-addr: 123.249.106.95:8848
+      config:
+        # 在 Nacos 的文件后缀名
+        file-extension: yaml
+      discovery:
+        # 设置 Nacos 的集群属性
+        cluster-name: ChangSha
+        # 配置命名空间，使用命名空间唯一 ID
+#        namespace: dev-namespace
+        # 设置为非临时实例
+#        ephemeral: false

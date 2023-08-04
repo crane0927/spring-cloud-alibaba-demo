@@ -1,4 +1,4 @@
-package com.liuh.order.service;
+package com.liuh.common.clients;
 
 import com.liuh.common.entity.Product;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * @Author: liuhuan
  * @Date: 2023/7/26 17:42
- * @PackageName: com.liuh.order.service
+ * @PackageName: com.liuh.common.clients
  * @ClassName: ProductService
  * @Description: TODO
  * @Version 1.0
  */
 @FeignClient("service-product")
-public interface ProductService {
+public interface ProductClient {
 
     /**
      * 查询商品信息
