@@ -100,3 +100,6 @@ CREATE TABLE `shop_order`
 ## 2023 年 08 月 04 日
 1. 将 Feign 相关方法提取到公共模块 common
 2. 使用 Nacos 作为配置中心
+
+## 2023 年 08 月 05 日
+1. 新增 spring cloud gateway 网关相关配置

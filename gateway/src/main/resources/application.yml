@@ -1,0 +1,65 @@
+server:
+  # 网关服务端口
+  port: 10010
+  servlet:
+    session:
+      timeout: 600
+
+spring:
+  application:
+    # 服务名称
+    name: service-gateway
+  cloud:
+    nacos:
+      discovery:
+        # Nacos 地址
+        server-addr: 123.249.106.95:8848
+    gateway:
+      # 全局跨域处理
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 允许哪些网站进行跨域请求
+            allowedOrigins:
+              - "https://localhost:10010"
+            # 允许的跨域请求 ajax 方式
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+            # 允许在请求头中携带的信息
+            allowedHeaders: "*"
+            # 是否允许携带 cookie
+            alloweCredentials: true
+            # 该请求跨域检测的有效期
+            maxAge: 360000
+      # 默认过滤器 将返回的状态码设置为 3000
+      default-filters:
+        - SetStatus=3000
+      # 路由配置
+      routes:
+        # 路由 id 自定义 只要唯一即可
+        - id: service-order
+          # 路由的目标地址 lb 就是负载均衡，后面跟服务名称
+          uri: lb://service-order
+          # 路由断言，也就是判断请是否符合路由规则的条件
+          predicates:
+            # /order 开头的请求访问 service-order
+            - Path=/order/**
+            # 自定义断言工厂 设置年龄范围为 18-60
+            - Age=18,60
+          filters:
+            # 将返回的状态码设置为 2000
+            - SetStatus=2000
+            # 自定义过滤器 控制日志的开启
+            - Log=true,false
+        - id: service-product
+          uri: lb://service-product
+          predicates:
+            - Path=/product/**
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/user/**
