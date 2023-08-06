@@ -103,3 +103,7 @@ CREATE TABLE `shop_order`
 
 ## 2023 年 08 月 05 日
 1. 新增 spring cloud gateway 网关相关配置
+
+## 2023 年 08 月 06 日
+1. 公共模块 common 依赖版本升级以及删除 spring-boot-starter-web 依赖
+2. 设置微服务打包名称为 ${project.artifactId}
