@@ -10,6 +10,9 @@ spring:
     # 微服务名称
     name: service-user
   cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
     nacos:
       discovery:
         # Nacos 地址

@@ -40,19 +40,20 @@ public class OrderController {
     public Order add(@PathVariable("pid") Integer pid) {
         log.info(">> 客户下单，调用商品微服务查询商品信息");
 
-        // 通过 Fegin 调用商品微服务
+        // 通过 Feign 调用商品微服务
         Product product = productClient.findByPid(pid);
         log.info(">> 商品信息，查询结果：" + JSON.toJSONString(product));
 
         Order order = new Order();
         order.setUid(1);
         order.setUsername("测试用户");
-        assert product != null;
-        order.setPid(product.getPid());
-        order.setPName(product.getPName());
-        order.setPPrice(product.getPPrice());
-        order.setNumber(1);
-        orderService.save(order);
+        if (product != null) {
+            order.setPid(product.getPid());
+            order.setPName(product.getPName());
+            order.setPPrice(product.getPPrice());
+            order.setNumber(1);
+        }
+//        orderService.save(order);
         return order;
     }
 }

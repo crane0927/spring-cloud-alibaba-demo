@@ -2,10 +2,31 @@ server:
   port: 8091
   servlet:
     context-path: /order
-    session:
-      timeout: 600
 
 spring:
+  cloud:
+    sentinel:
+      # 关闭 context 整合
+      web-context-unify: false
+      transport:
+        dashboard: localhost:8080
+      datasource:
+        # 限流
+        flow:
+          nacos:
+            server-addr: 123.249.106.95:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: SENTINEL_GROUP
+            # 类型有 flow、degrade、authority、param-flow
+            rule-type: flow
+        # 降级
+        degrade:
+          nacos:
+            server-addr: 123.249.106.95:8848
+            dataId: ${spring.application.name}-degrade-rules
+            groupId: SENTINEL_GROUP
+            # 类型有 flow、degrade、authority、param-flow
+            rule-type: degrade
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://123.249.106.95:3306/order?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
@@ -27,3 +48,17 @@ service-product:
 
 parameter:
   name: 本地配置文件
+
+feign:
+  okhttp:
+    # 开启 feign 对 okhttp 的支持
+    enabled: true
+  client:
+    config:
+      # 这里用 default 就是全局配置，如果是写服务名称，则是针对某个微服务的配置
+      default:
+        # 日志级别
+        loggerLevel: FULL
+  sentinel:
+    # 开启 Feign 的 Sentinel 功能
+    enabled: true

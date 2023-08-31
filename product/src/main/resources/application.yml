@@ -2,14 +2,15 @@ server:
   port: 8081
   servlet:
     context-path: /product
-    session:
-      timeout: 600
 
 spring:
   application:
     # 微服务名称
     name: service-product
   cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
     nacos:
       discovery:
         # Nacos 地址
@@ -27,3 +28,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: false
+
+feign:
+  sentinel:
+    enabled: true

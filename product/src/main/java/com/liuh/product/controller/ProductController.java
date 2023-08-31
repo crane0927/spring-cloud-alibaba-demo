@@ -29,6 +29,19 @@ public class ProductController {
     @GetMapping("/findByPid/{pid}")
     public Product findByPid(@PathVariable("pid") Integer pid) {
         Product product = productService.findByPid(pid);
+        if (pid == 1) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 当 id = 2 抛出运行时异常
+        if (pid == 2) {
+            throw new RuntimeException();
+        }
+
         log.info("查询到商品:" + JSON.toJSONString(product));
         return product;
     }

@@ -107,3 +107,7 @@ CREATE TABLE `shop_order`
 ## 2023 年 08 月 06 日
 1. 公共模块 common 依赖版本升级以及删除 spring-boot-starter-web 依赖
 2. 设置微服务打包名称为 ${project.artifactId}
+
+## 2023 年 08 月 31 日
+1. 在公共模块 common 引入 Sentinel 相关依赖
+2. 在 service-order 中进行 Sentinel 相关配置

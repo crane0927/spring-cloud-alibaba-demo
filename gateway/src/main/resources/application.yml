@@ -38,6 +38,7 @@ spring:
       # 默认过滤器 将返回的状态码设置为 3000
       default-filters:
         - SetStatus=3000
+        - AddRequestHeader=origin,gateway
       # 路由配置
       routes:
         # 路由 id 自定义 只要唯一即可

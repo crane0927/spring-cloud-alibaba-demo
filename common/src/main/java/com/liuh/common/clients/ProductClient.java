@@ -1,5 +1,6 @@
 package com.liuh.common.clients;
 
+import com.liuh.common.clients.fallback.ProductClientFallBackFactory;
 import com.liuh.common.entity.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Description: TODO
  * @Version 1.0
  */
-@FeignClient("service-product")
+//@FeignClient(value = "service-product", fallbackFactory = ProductClientFallBackFactory.class)
+@FeignClient(value = "service-product")
 public interface ProductClient {
 
     /**
