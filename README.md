@@ -111,3 +111,6 @@ CREATE TABLE `shop_order`
 ## 2023 年 08 月 31 日
 1. 在公共模块 common 引入 Sentinel 相关依赖
 2. 在 service-order 中进行 Sentinel 相关配置
+
+## 2023 年 09 月 01 日
+1. 更名为 spring-cloud-alibaba-demo
